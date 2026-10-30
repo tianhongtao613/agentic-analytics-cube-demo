@@ -15,19 +15,24 @@ git clone <你的GitHub仓库地址>
 cd <你的项目名>
 # This will spin up Postgres and Cube.dev, and initialize the mock dataset
 docker-compose up -d
+```
 
 **2. Setup Python Environment**
 ```bash
 python -m venv .venv
 source .venv/bin/activate  # On Windows use: .venv\Scripts\activate
 pip install -r requirements.txt
+```
 
 **3. Configure API Key**
-Create a .env file in the root directory and add your LLM API Key (Groq/OpenRouter/OpenAI):
+Create a `.env` file in the root directory and add your LLM API Key (Groq/OpenRouter/OpenAI):
+```text
 LLM_API_KEY=your_api_key_here
+```
 
 **4. Run the Streamlit App**
 ```bash
 streamlit run app.py
+```
 
-**Open http://localhost:8501 to start chatting with your data!**
+**Open `http://localhost:8501` to start chatting with your data!**
