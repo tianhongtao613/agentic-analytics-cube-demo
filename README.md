@@ -34,3 +34,16 @@ streamlit run app.py
 ```
 
 **Open `http://localhost:8501` to start chatting with your data!**
+
+## 🎯 Example Questions to Try
+
+Once the Streamlit app is running, try pasting the following natural language queries into the input box to see the AI and Cube.dev in action:
+
+* **Top N & Sorting (Core Business Metric):**
+  > "List the top 5 customers who generated the highest total revenue, sorted in descending order."
+
+* **Time Series Analysis (Trend Visualization):**
+  > "Show me the trend of total payment revenue aggregated on a monthly basis."
+
+* **Multi-Dimensional Aggregation:**
+  > "Group the customers by their active status, and calculate the total number of rentals for each group."
