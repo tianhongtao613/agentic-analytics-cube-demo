@@ -47,3 +47,7 @@ Once the Streamlit app is running, try pasting the following natural language qu
 
 * **Multi-Dimensional Aggregation:**
   > "Group the customers by their active status, and calculate the total number of rentals for each group."
+
+* **Edge Case & Guardrail Test (Hallucination Prevention):**
+  > "Find out which movie or film has the highest number of rentals."
+  *(Note: Since movie titles are intentionally excluded from the current semantic model, a well-prompted AI Agent should gracefully refuse or trigger a fallback error rather than hallucinating invalid fields.)*
