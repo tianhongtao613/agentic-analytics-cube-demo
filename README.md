@@ -11,8 +11,6 @@ This is a minimal, end-to-end prototype demonstrating an AI Agent architecture q
 
 **1. Clone the repository & Start the Data Layer**
 ```bash
-git clone <你的GitHub仓库地址>
-cd <你的项目名>
 # This will spin up Postgres and Cube.dev, and initialize the mock dataset
 docker-compose up -d
 ```
