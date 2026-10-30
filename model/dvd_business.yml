@@ -1,0 +1,76 @@
+cubes:
+  # --- 1.  (Rentals) ---
+  - name: rentals
+    sql_table: public.rental
+    
+    
+    joins:
+      - name: customers
+        sql: "{CUBE}.customer_id = {customers}.customer_id"
+        relationship: belongs_to
+
+    measures:
+      - name: total_rentals
+        type: count
+        description: "total rentals of dvd"
+
+    dimensions:
+      - name: id
+        sql: rental_id
+        type: number
+        primary_key: true
+
+      - name: rental_date
+        sql: rental_date
+        type: time
+
+  # --- 2.(Customers) ---
+  - name: customers
+    sql_table: public.customer
+    
+    measures:
+      - name: total_customers
+        type: count
+        description: "total clients registered"
+
+    dimensions:
+      - name: customer_id
+        sql: customer_id
+        type: number
+        primary_key: true
+
+      # 
+      - name: full_name
+        sql: "{CUBE}.first_name || ' ' || {CUBE}.last_name"
+        type: string
+        description: "full name"
+        
+      - name: is_active
+        sql: activebool
+        type: boolean
+
+  # --- 3. (Payments) ---
+  - name: payments
+    sql_table: public.payment
+    
+    joins:
+      - name: customers
+        sql: "{CUBE}.customer_id = {customers}.customer_id"
+        relationship: belongs_to
+
+    measures:
+      # 【核心亮点】这不是简单的计数，而是对金额求和，典型的商业指标
+      - name: total_revenue
+        sql: amount
+        type: sum
+        description: "total revenue"
+
+    dimensions:
+      - name: payment_id
+        sql: payment_id
+        type: number
+        primary_key: true
+            
+      - name: payment_date
+        sql: payment_date
+        type: time

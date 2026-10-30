@@ -1,0 +1,34 @@
+version: '3'
+services:
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: test_user
+      POSTGRES_PASSWORD: test_password
+      POSTGRES_DB: my_offline_db
+    # 把我们的离线数据脚本挂载进去，数据库启动时会自动执行
+    volumes:
+      # 01 优先执行建表结构
+      - ./pagila-schema.sql:/docker-entrypoint-initdb.d/01-pagila-schema.sql
+      # 02 随后执行插入数据
+      - ./pagila-insert-data.sql:/docker-entrypoint-initdb.d/02-pagila-insert-data.sql
+    ports:
+      - "5432:5432"
+
+  cube:
+    image: cubejs/cube:latest
+    ports:
+      - "4000:4000" # Cube 的开发者 Playground 界面
+      - "3000:3000" # Cube 的 API 端口
+    environment:
+      - CUBEJS_DB_TYPE=postgres
+      - CUBEJS_DB_HOST=db
+      - CUBEJS_DB_NAME=my_offline_db
+      - CUBEJS_DB_USER=test_user
+      - CUBEJS_DB_PASS=test_password
+      - CUBEJS_DEV_MODE=true
+    # 把我们写的 Semantic Layer 逻辑挂载进去
+    volumes:
+      - ./model:/cube/conf/model
+    depends_on:
+      - db

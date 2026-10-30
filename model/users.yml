@@ -1,0 +1,26 @@
+cubes:
+  - name: user_events
+    sql_table: public.raw_user_events
+
+    # 定义指标 (Measures) - 这是大模型最关心的聚合结果
+    measures:
+      - name: total_events
+        type: count
+        description: "The total number of events recorded."
+
+      - name: active_users
+        type: count_distinct
+        sql: user_id
+        filters:
+          - sql: "{CUBE}.event_type = 'login_success'"
+        description: "Count of unique users who logged in successfully."
+
+    # 定义维度 (Dimensions) - 这是大模型用来做筛选和分组的条件
+    dimensions:
+      - name: event_time
+        sql: event_timestamp
+        type: time
+
+      - name: event_type
+        sql: event_type
+        type: string
